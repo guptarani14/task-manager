@@ -2,8 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import "./Auth.css";
 
-// ✅ Define API URL for production (Render backend)
-const API_URL = import.meta.env.VITE_API_URL || "https://task-manager-backend-atxz.onrender.com";
+// ✅ Backend URL
+const API_URL = process.env.REACT_APP_API_URL || "https://task-manager-sn76.onrender.com";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,10 +11,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${API_URL}/api/users/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(`${API_URL}/api/users/login`, { email, password });
       localStorage.setItem("token", res.data.token);
       alert("Login Successful!");
       window.location.href = "/tasks";

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// ✅ Define API URL (Render backend)
-const API_URL = import.meta.env.VITE_API_URL || "https://task-manager-backend-atxz.onrender.com";
+// ✅ Backend URL
+const API_URL = process.env.REACT_APP_API_URL || "https://task-manager-sn76.onrender.com";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -13,7 +13,6 @@ function Tasks() {
     fetchTasks();
   }, []);
 
-  // ✅ Fetch tasks from backend
   const fetchTasks = async () => {
     try {
       const res = await axios.get(`${API_URL}/api/tasks`, {
@@ -22,11 +21,9 @@ function Tasks() {
       setTasks(res.data);
     } catch (err) {
       console.error("❌ Error fetching tasks:", err);
-      alert("Failed to fetch tasks.");
     }
   };
 
-  // ✅ Create new task
   const createTask = async () => {
     if (!title.trim()) return alert("Please enter a task title!");
     try {
@@ -39,11 +36,9 @@ function Tasks() {
       fetchTasks();
     } catch (err) {
       console.error("❌ Error creating task:", err);
-      alert("Failed to create task.");
     }
   };
 
-  // ✅ Delete a task
   const deleteTask = async (id) => {
     try {
       await axios.delete(`${API_URL}/api/tasks/${id}`, {
@@ -52,11 +47,9 @@ function Tasks() {
       fetchTasks();
     } catch (err) {
       console.error("❌ Error deleting task:", err);
-      alert("Failed to delete task.");
     }
   };
 
-  // ✅ Update a task (mark completed)
   const updateTask = async (id) => {
     try {
       await axios.put(
@@ -67,11 +60,9 @@ function Tasks() {
       fetchTasks();
     } catch (err) {
       console.error("❌ Error updating task:", err);
-      alert("Failed to update task.");
     }
   };
 
-  // ✅ Logout user
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.href = "/";
