@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./Auth.css";
 
-// ✅ Backend URL
-const API_URL = process.env.REACT_APP_API_URL || "https://task-manager-sn76.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "https://task-manager-sn76.onrender.com";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -26,25 +25,10 @@ function Signup() {
     <div className="auth-container">
       <div className="auth-box">
         <h2>Sign Up</h2>
-        <input
-          className="auth-input"
-          placeholder="Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="auth-input"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          className="auth-input"
-          placeholder="Password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button className="auth-button" onClick={handleSignup}>
-          Signup
-        </button>
+        <input className="auth-input" placeholder="Name" onChange={(e) => setName(e.target.value)} />
+        <input className="auth-input" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <input className="auth-input" placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
+        <button className="auth-button" onClick={handleSignup}>Signup</button>
         <p className="auth-text">
           Already have an account? <a href="/">Login here</a>
         </p>

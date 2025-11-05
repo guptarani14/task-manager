@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// ✅ Backend URL
-const API_URL = process.env.REACT_APP_API_URL || "https://task-manager-sn76.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "https://task-manager-sn76.onrender.com";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -52,11 +51,9 @@ function Tasks() {
 
   const updateTask = async (id) => {
     try {
-      await axios.put(
-        `${API_URL}/api/tasks/${id}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.put(`${API_URL}/api/tasks/${id}`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       fetchTasks();
     } catch (err) {
       console.error("❌ Error updating task:", err);
@@ -117,11 +114,7 @@ function Tasks() {
           tasks.map((t) => (
             <li key={t._id} style={{ margin: "10px", fontSize: "18px" }}>
               <strong>{t.title}</strong> -{" "}
-              <span
-                style={{
-                  color: t.status === "completed" ? "green" : "orange",
-                }}
-              >
+              <span style={{ color: t.status === "completed" ? "green" : "orange" }}>
                 {t.status}
               </span>
 

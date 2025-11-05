@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "./Auth.css";
 
-// ✅ Backend URL
-const API_URL = process.env.REACT_APP_API_URL || "https://task-manager-sn76.onrender.com";
+const API_URL = import.meta.env.VITE_API_URL || "https://task-manager-sn76.onrender.com";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -36,9 +35,7 @@ function Login() {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="auth-button" onClick={handleLogin}>
-          Login
-        </button>
+        <button className="auth-button" onClick={handleLogin}>Login</button>
         <p className="auth-text">
           Don’t have an account? <a href="/signup">Sign up here</a>
         </p>
