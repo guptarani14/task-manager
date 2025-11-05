@@ -9,15 +9,15 @@ function Signup() {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/api/users/signup", {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/users/signup`,
+        { name, email, password }
+      );
       console.log(res.data);
       alert("Signup Successful!");
       window.location.href = "/";
     } catch (error) {
+      console.error(error);
       alert("Signup Failed!");
     }
   };

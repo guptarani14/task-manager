@@ -6,18 +6,16 @@ function Tasks() {
   const [title, setTitle] = useState("");
   const token = localStorage.getItem("token");
 
-  
   useEffect(() => {
     fetchTasks();
-    
   }, []);
 
- 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/tasks", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/tasks`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setTasks(res.data);
     } catch (err) {
       console.error("❌ Error fetching tasks:", err);
@@ -28,7 +26,7 @@ function Tasks() {
     if (!title.trim()) return alert("Please enter a task title!");
     try {
       await axios.post(
-        "http://localhost:5000/api/tasks",
+        `${process.env.REACT_APP_API_URL}/api/tasks`,
         { title, description: "New Task", status: "pending" },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -39,10 +37,9 @@ function Tasks() {
     }
   };
 
-
   const deleteTask = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTasks();
@@ -51,11 +48,10 @@ function Tasks() {
     }
   };
 
-
   const updateTask = async (id) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/tasks/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/tasks/${id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -70,10 +66,8 @@ function Tasks() {
     window.location.href = "/";
   };
 
-  
   return (
     <div style={{ textAlign: "center", marginTop: "40px" }}>
-      {/* Logout button */}
       <button
         onClick={handleLogout}
         style={{
@@ -91,10 +85,8 @@ function Tasks() {
         Logout
       </button>
 
-      {/* Title */}
       <h2>Your Tasks</h2>
 
-      {/* Input for adding new task */}
       <input
         placeholder="Enter task title"
         value={title}
@@ -116,7 +108,6 @@ function Tasks() {
         Add Task
       </button>
 
-      {/* Task List */}
       <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
         {tasks.length === 0 ? (
           <p>No tasks found. Add some!</p>
@@ -132,7 +123,6 @@ function Tasks() {
                 {t.status}
               </span>
 
-              {/* Update button */}
               <button
                 onClick={() => updateTask(t._id)}
                 style={{
@@ -148,7 +138,6 @@ function Tasks() {
                 ✔
               </button>
 
-              {/* Delete button */}
               <button
                 onClick={() => deleteTask(t._id)}
                 style={{
